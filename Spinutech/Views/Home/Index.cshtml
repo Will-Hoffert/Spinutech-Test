@@ -1,0 +1,48 @@
+﻿@model Spinutech.Models.ExerciseSix
+
+@{
+    ViewData["Title"] = "Exercise Six Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome To Will's Exercise Six</h1>
+    <p>Please Enter A Number In The Text Box Below And Click Calculate. The Program Will Process Your Number And Let You Know If It Is A Palindrome.</p>
+</div>
+
+<hr />
+
+<div>
+
+    @using ( Html.BeginForm( "Calculate", "Home", null, FormMethod.Post, true, new { @id = "ExerciseSixForm" } ) )
+    {
+        @Html.AntiForgeryToken()
+
+        if ( !string.IsNullOrEmpty( ViewBag.StatusMessage ) && ViewBag.StatusMessage.Contains( "Passed" ) )
+        {
+            <div class="is-a-palindrome">
+                @ViewBag.StatusMessage
+            </div>
+        }
+
+        if ( !string.IsNullOrEmpty( ViewBag.StatusMessage ) && ViewBag.StatusMessage.Contains( "Failed" ) )
+        {
+            <div class="not-a-palindrome">
+                @ViewBag.StatusMessage
+            </div>
+        }
+
+        <div class="form-group">
+            @Html.LabelFor( model => model.Number, htmlAttributes: new { @class = "control-label font-weight-bold" } )
+            <div>
+                @Html.EditorFor( model => model.Number, new { htmlAttributes = new { @type = "text" } } )
+            </div>
+            @Html.ValidationMessageFor( model => model.Number, "", new { @class = "text-danger" } )
+        </div>
+
+        <div class="form-group">
+            <div>
+                <input type="submit" name="Calculate" value="Calculate" />
+            </div>
+        </div>
+    }
+</div>
